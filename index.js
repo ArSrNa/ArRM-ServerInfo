@@ -1,10 +1,10 @@
-const path = require('path');
 const express = require('express');
 const app = express();
 const osu = require('node-os-utils');
 const os = require('os');
 const diskinfo = require('diskinfo');
-const fs = require('fs');
+var port=3001
+
 
 function flatObj(o) {
   if (typeof o !== 'object') throw new Error(`TypeError: need a object type but get a ${typeof o}`)
@@ -64,5 +64,23 @@ diskinfo.getDrives(function(err, drives) {
       })
 })//内存使用情况，建议2s以上获取一次
 
-app.listen(3001)
-console.log('Powered by Ar-Sr-Na; Listen in port 3001')
+app.listen(port)
+console.log(`
+Powered by Ar-Sr-Na; Listen in port ${port}
+
+MainUsage:
+TYP1: Open browser, type '<IP>:${port}/<path>' 
+TYP2: By http/ajax..., 'GET <IP>:${port}/<path>'
+<IP> is your internal or public ip address
+The path parameters are as follows:
+/getInfo/cpu : Get CPU Model,Type,Frequency
+/getInfo/cpuUsage : Get CPU Usage
+/getInfo/disk : Get disk info
+/getInfo/mem : Get memory info
+
+now running at http://127.0.0.1:${port}
+Get CPU Model,Type,Frequency http://127.0.0.1:${port}/getInfo/cpu
+Get CPU Usage http://127.0.0.1:${port}/getInfo/cpuUsage
+Get disk info http://127.0.0.1:${port}/getInfo/disk
+Get memory info http://127.0.0.1:${port}/getInfo/mem
+`)
